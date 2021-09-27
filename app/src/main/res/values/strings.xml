@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BookLibrary App</string>
+    <string name="title_editText">Book Title</string>
+    <string name="author_editText">Book Author</string>
+    <string name="numberOfPages_editText">Number of pages</string>
+    <string name="addBook_description">AddBook</string>
+    <string name="save_button">Save</string>
 </resources>

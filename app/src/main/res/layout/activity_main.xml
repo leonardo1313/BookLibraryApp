@@ -10,6 +10,7 @@
         android:id="@+id/book_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="6dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
@@ -33,5 +34,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="#040101"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_add"
+        android:contentDescription="@string/addBook_description" />
 </androidx.constraintlayout.widget.ConstraintLayout>
