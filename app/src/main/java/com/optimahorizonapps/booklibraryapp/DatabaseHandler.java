@@ -1,8 +1,10 @@
 package com.optimahorizonapps.booklibraryapp;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -36,5 +38,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
+    }
+
+    public void addBook(String title, String author, int pages) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_TITLE, title);
+        values.put(COLUMN_AUTHOR, author);
+        values.put(COLUMN_PAGES, pages);
+        long result = db.insert(TABLE_NAME, null, values);
+        
+        if(result == -1) {
+            Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
