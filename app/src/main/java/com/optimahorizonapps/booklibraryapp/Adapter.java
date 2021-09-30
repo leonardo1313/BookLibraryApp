@@ -1,12 +1,15 @@
 package com.optimahorizonapps.booklibraryapp;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     private Context context;
     private ArrayList<String> book_id, book_title, book_author, book_pages;
+
 
     Adapter(Context context, ArrayList<String> book_id, ArrayList<String> book_title, ArrayList<String> book_author,
             ArrayList<String> book_pages) {
@@ -39,6 +43,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         holder.bookTitle_textView.setText(String.valueOf(book_title.get(position)));
         holder.bookAuthor_textView.setText(String.valueOf(book_author.get(position)));
         holder.bookPages_textView.setText(String.valueOf(book_pages.get(position)));
+        holder.rowLayout.setOnClickListener(v -> {
+
+            Intent intent = new Intent(context, UpdateActivity.class);
+            intent.putExtra("id", book_id.get(position));
+            intent.putExtra("title", book_title.get(position));
+            intent.putExtra("author", book_author.get(position));
+            intent.putExtra("pages", book_pages.get(position));
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -49,6 +62,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView bookId_textView, bookTitle_textView, bookAuthor_textView, bookPages_textView;
+        private LinearLayoutCompat rowLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,6 +70,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             bookTitle_textView = itemView.findViewById(R.id.bookTitle_textView);
             bookAuthor_textView = itemView.findViewById(R.id.bookAuthor_textView);
             bookPages_textView = itemView.findViewById(R.id.bookPages_textView);
+            rowLayout = itemView.findViewById(R.id.row_layout);
         }
     }
 }
