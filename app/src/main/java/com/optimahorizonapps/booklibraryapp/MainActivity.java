@@ -1,5 +1,6 @@
 package com.optimahorizonapps.booklibraryapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,11 +49,20 @@ public class MainActivity extends AppCompatActivity {
 
         storeDataInLists();
 
-        adapter = new Adapter(MainActivity.this, book_id, book_title, book_author, book_pages);
+        adapter = new Adapter(MainActivity.this, this, book_id, book_title, book_author, book_pages);
         book_RecyclerView.setAdapter(adapter);
         book_RecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1) {
+            recreate();
+        }
+    }
+
     public void storeDataInLists() {
         Cursor cursor = dbHandler.readAllData();
         

@@ -24,11 +24,15 @@ public class UpdateActivity extends AppCompatActivity {
         pagesUpdate_editText = findViewById(R.id.update_numOfPages_editText);
         update_button = findViewById(R.id.updateBook_button);
 
-        update_button.setOnClickListener(v -> {
-
-        });
-        
+        //we need to cal getAndSetIntentData firs, and only then can we call updateData
         getAndSetIntentData();
+
+        update_button.setOnClickListener(v -> {
+            DatabaseHandler dbHandler = new DatabaseHandler(UpdateActivity.this);
+            dbHandler.updateData(id, title, author, pages);
+        });
+
+
     }
 
     public void getAndSetIntentData() {

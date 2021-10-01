@@ -17,11 +17,13 @@ import java.util.ArrayList;
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     private Context context;
+    private Activity activity;
     private ArrayList<String> book_id, book_title, book_author, book_pages;
 
 
-    Adapter(Context context, ArrayList<String> book_id, ArrayList<String> book_title, ArrayList<String> book_author,
+    Adapter(Activity activity, Context context, ArrayList<String> book_id, ArrayList<String> book_title, ArrayList<String> book_author,
             ArrayList<String> book_pages) {
+        this.activity = activity;
         this.context = context;
         this.book_id = book_id;
         this.book_title = book_title;
@@ -50,7 +52,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             intent.putExtra("title", book_title.get(position));
             intent.putExtra("author", book_author.get(position));
             intent.putExtra("pages", book_pages.get(position));
-            context.startActivity(intent);
+            activity.startActivityForResult(intent, 1);
         });
     }
 

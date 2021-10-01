@@ -66,6 +66,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor = db.rawQuery(query, null);
         }
         return cursor;
+    }
 
+    public void updateData(String row_id, String title, String author, String pages) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TITLE, title);
+        values.put(COLUMN_AUTHOR, author);
+        values.put(COLUMN_PAGES, pages);
+
+        long result = db.update(TABLE_NAME, values, "_id=?", new String[]{row_id});
+        if(result == -1) {
+            Toast.makeText(context, "Update failed!", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "Update successful!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
