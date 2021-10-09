@@ -12,6 +12,8 @@
         android:theme="@style/Theme.BookLibraryApp">
         <activity
             android:name=".UpdateActivity"
+            android:label="Update Book"
+            android:parentActivityName=".MainActivity"
             android:exported="true" />
         <activity
             android:name=".AddBookActivity"

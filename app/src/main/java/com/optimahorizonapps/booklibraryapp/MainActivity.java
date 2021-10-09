@@ -33,12 +33,9 @@ public class MainActivity extends AppCompatActivity {
         book_RecyclerView = findViewById(R.id.book_recyclerView);
         addBook_Button = findViewById(R.id.add_floatingActionButton);
 
-        addBook_Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddBookActivity.class);
-                startActivity(intent);
-            }
+        addBook_Button.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddBookActivity.class);
+            startActivity(intent);
         });
 
         dbHandler = new DatabaseHandler(MainActivity.this);
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1) {
             recreate();

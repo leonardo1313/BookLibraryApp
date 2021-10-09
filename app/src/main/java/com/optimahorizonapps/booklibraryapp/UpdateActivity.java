@@ -1,7 +1,10 @@
 package com.optimahorizonapps.booklibraryapp;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,8 +14,9 @@ import android.widget.Toast;
 public class UpdateActivity extends AppCompatActivity {
 
     private EditText titleUpdate_editText, authorUpdate_editText, pagesUpdate_editText;
-    private Button update_button;
+    private Button update_button, delete_button;
     private String id, title, author, pages;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +27,25 @@ public class UpdateActivity extends AppCompatActivity {
         authorUpdate_editText = findViewById(R.id.update_author_editText);
         pagesUpdate_editText = findViewById(R.id.update_numOfPages_editText);
         update_button = findViewById(R.id.updateBook_button);
+        delete_button = findViewById(R.id.deleteBook_button);
 
         //we need to cal getAndSetIntentData firs, and only then can we call updateData
         getAndSetIntentData();
+
+        //set ActionBar title after getAndSetIntentData method is called
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setTitle(title);
+        }
 
         update_button.setOnClickListener(v -> {
             DatabaseHandler dbHandler = new DatabaseHandler(UpdateActivity.this);
             dbHandler.updateData(id, title, author, pages);
         });
 
+        delete_button.setOnClickListener(v -> {
+            confirmDeleteDialog();
+        });
 
     }
 
@@ -52,5 +66,19 @@ public class UpdateActivity extends AppCompatActivity {
         }else {
             Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void confirmDeleteDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Delete " + title);
+        alertDialog.setMessage("Are you sure you want to delete " + title + "?");
+        alertDialog.setPositiveButton("Yes", (dialog, which) -> {
+            DatabaseHandler dbHandler = new DatabaseHandler(UpdateActivity.this);
+            dbHandler.deleteOneBook(id);
+        });
+        alertDialog.setNegativeButton("No", (dialog, which) -> {
+
+        });
+        alertDialog.create().show();
     }
 }

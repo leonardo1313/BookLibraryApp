@@ -21,7 +21,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String COLUMN_AUTHOR = "book_author";
     private static final String COLUMN_PAGES = "book_pages";
 
-    public DatabaseHandler(Context context) {
+    DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -53,7 +53,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if(result == -1) {
             Toast.makeText(context, "Failed!", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Success!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Book added!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -68,18 +68,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void updateData(String row_id, String title, String author, String pages) {
+    public void updateData(String id, String title, String author, String pages) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TITLE, title);
         values.put(COLUMN_AUTHOR, author);
         values.put(COLUMN_PAGES, pages);
 
-        long result = db.update(TABLE_NAME, values, "_id=?", new String[]{row_id});
+        long result = db.update(TABLE_NAME, values, "_id=?", new String[]{id});
         if(result == -1) {
             Toast.makeText(context, "Update failed!", Toast.LENGTH_SHORT).show();
         }else {
-            Toast.makeText(context, "Update successful!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Update successful! " + title, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void deleteOneBook(String row_id) {
+        SQLiteDatabase db = getWritableDatabase();
+        long result = db.delete(TABLE_NAME, "_id=?", new String[]{row_id});
+        if(result == -1) {
+            Toast.makeText(context, "Book failed to delete!", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "Book successfully deleted!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
