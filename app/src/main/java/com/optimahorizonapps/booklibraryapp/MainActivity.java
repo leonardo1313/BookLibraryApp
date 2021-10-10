@@ -1,6 +1,8 @@
 package com.optimahorizonapps.booklibraryapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -73,5 +78,39 @@ public class MainActivity extends AppCompatActivity {
                 book_pages.add(cursor.getString(3));
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.delete_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.delete_all){
+            confirmDeleteAllDialog();
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void confirmDeleteAllDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Delete All Books");
+        alertDialog.setMessage("Are you sure you want to delete all Books?");
+        alertDialog.setPositiveButton("Yes", (dialog, which) -> {
+            DatabaseHandler dbHandler = new DatabaseHandler(this);
+            dbHandler.deleteAllBooks();
+            //refresh Activity
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+        alertDialog.setNegativeButton("No", (dialog, which) -> {
+
+        });
+        alertDialog.create().show();
     }
 }

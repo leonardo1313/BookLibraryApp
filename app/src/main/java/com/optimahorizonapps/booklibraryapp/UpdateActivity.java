@@ -75,10 +75,12 @@ public class UpdateActivity extends AppCompatActivity {
         alertDialog.setPositiveButton("Yes", (dialog, which) -> {
             DatabaseHandler dbHandler = new DatabaseHandler(UpdateActivity.this);
             dbHandler.deleteOneBook(id);
+            finish();
         });
         alertDialog.setNegativeButton("No", (dialog, which) -> {
 
         });
         alertDialog.create().show();
     }
+
 }

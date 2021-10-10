@@ -91,6 +91,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }else {
             Toast.makeText(context, "Book successfully deleted!", Toast.LENGTH_SHORT).show();
         }
+    }
 
+    public void deleteAllBooks() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_NAME);
     }
 }
