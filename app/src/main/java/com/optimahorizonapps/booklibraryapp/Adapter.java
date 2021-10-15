@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +21,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     private Context context;
     private Activity activity;
     private ArrayList<String> book_id, book_title, book_author, book_pages;
+
+    Animation translate_anim;
 
 
     Adapter(Activity activity, Context context, ArrayList<String> book_id, ArrayList<String> book_title, ArrayList<String> book_author,
@@ -73,6 +77,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             bookAuthor_textView = itemView.findViewById(R.id.bookAuthor_textView);
             bookPages_textView = itemView.findViewById(R.id.bookPages_textView);
             rowLayout = itemView.findViewById(R.id.row_layout);
+            //Recycler View animation
+            translate_anim = AnimationUtils.loadAnimation(context, R.anim.translate_anim);
+            rowLayout.setAnimation(translate_anim);
         }
     }
 }
